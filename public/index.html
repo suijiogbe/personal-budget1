@@ -119,9 +119,9 @@
             <!-- This is a Semantic HTML Change -->
             <article class="text-box">
                 <!-- This is an A11y Change -->
-                <h2>Free</h2>
+                <h2>Chart</h2>
                 <p>
-                    This app is free!!! And you are the only one holding your data!
+                    <canvas id="myChart" width="400" height="400"></canvas>
                 </p>
             </article>
 
@@ -138,6 +138,49 @@
             <a href="#top" aria-label="Return to top">Return to top</a>
         </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js" integrity="sha512-h9644v03pHqrIHThkvXhB2PJ8zf5E9IyVnrSfZg8Yj8k4RsO4zldcQc4Bi9iVLUCCsqNY0b4WXVV4UB+wbWENA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        var dataSource = {
+            datasets: [
+                {
+                    data: [],
+                    backgroundColor: [
+                        '#ffcd56',
+                        '#ff6384',
+                        '#36a2eb',
+                        '#fd6b19',
+                    ]
+                }
+            ],
+            labels: []
+        };
+
+        function createChart() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: dataSource
+            });
+        }
+
+        function getBudget() {
+            axios.get('/budget')
+            .then(function (res) {
+                for (var i = 0; i < res.data.myBudget.length; i++) {
+                    dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
+                    dataSource.labels[i] = res.data.myBudget[i].title;
+                }
+                createChart();
+            });
+        }
+
+        getBudget();
+    </script>
+
 
 </body>
 </html>
