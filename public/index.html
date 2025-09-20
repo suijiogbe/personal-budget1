@@ -119,7 +119,7 @@
             <!-- This is a Semantic HTML Change -->
             <article class="text-box">
                 <!-- This is an A11y Change -->
-                <h2>Charts</h2>
+                <h2>Chart</h2>
                 <p>
                     <canvas id="myChart" width="400" height="400"></canvas>
                 </p>
@@ -320,7 +320,7 @@
 
     /* ------- axios -------*/
         function getBudget() {
-            axios.get('/budget')
+            axios.get('/http://localhost:3000/budget')
             .then(function (res) {
                 for (var i = 0; i < res.data.myBudget.length; i++) {
                     dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
